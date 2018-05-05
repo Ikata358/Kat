@@ -15,8 +15,9 @@ public class Game implements DeletableObserver {
     private Window window;
     private int size = 20;
     // private int bombTimer = 3000;
-    private int numberOfBreakableBlocks = 40;
-
+    private int numberOfBlocks = 40;
+    private int numberOfFires = 20;
+    
     public Game(Window window) {
         this.window = window;
 
@@ -24,20 +25,27 @@ public class Game implements DeletableObserver {
         objects.add(new Player(10, 10, 3, 5));
 
         // Map building
-        for (int i = 0; i < size; i++) { // Frames the map with unbreakable blocks
+        for (int i = 0; i < size; i++) { // Frames the map with blocks
             objects.add(new Block(i, 0));
             objects.add(new Block(0, i));
             objects.add(new Block(i, size - 1));
             objects.add(new Block(size - 1, i));
         }
         Random rand = new Random();
-        for (int i = 0; i < numberOfBreakableBlocks; i++) { // Adds random breakable blocks
+        for (int i = 0; i < numberOfBlocks; i++) { // Adds random blocks
             int x = rand.nextInt(16) + 2;
             int y = rand.nextInt(16) + 2;
             Block block = new Block(x, y);
             objects.add(block);
         }
 
+        for (int i = 0; i < numberOfFires; i++) { // Adds random fires
+            int x = rand.nextInt(16) + 2;
+            int y = rand.nextInt(16) + 2;
+            Fire fire = new Fire(x, y);
+            objects.add(fire);
+        }
+        
         window.setGameObjects(this.getGameObjects());
         notifyView();
     }
