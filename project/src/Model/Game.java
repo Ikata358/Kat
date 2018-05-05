@@ -22,7 +22,7 @@ public class Game implements DeletableObserver {
         this.window = window;
 
         // Creating one Player at position (1,1)
-        objects.add(new Player(10, 10, 3, 5));
+        objects.add(new Player(10, 10));
 
         // Map building
         for (int i = 0; i < size; i++) { // Frames the map with blocks
@@ -64,6 +64,7 @@ public class Game implements DeletableObserver {
         int nextY = player.getPosY() + y;
 
         boolean obstacle = false;
+        boolean fire = false;
         for (GameObject object : objects) {
             if (object.isAtPosition(nextX, nextY)) {
                 obstacle = object.isObstacle();
@@ -75,6 +76,9 @@ public class Game implements DeletableObserver {
         player.rotate(x, y);
         if (obstacle == false) {
             player.move(x, y);
+        }
+        if (fire == true) {
+        	player.loseLife(1);
         }
         notifyView();
     }
