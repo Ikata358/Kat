@@ -1,6 +1,6 @@
 package Model;
 
-public class Block extends GameObject {
+public class Block extends Immobile {
 
     public Block(int X, int Y) {
         super(X, Y, 0);
