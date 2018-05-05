@@ -9,5 +9,6 @@ public class Main {
         Game game = new Game(window);
         Keyboard keyboard = new Keyboard(game);
         window.setKeyListener(keyboard);
+        
     }
 }
