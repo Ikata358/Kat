@@ -46,6 +46,13 @@ public class Game implements DeletableObserver {
             objects.add(fire);
         }
         
+        for (int i = 0; i < numberOfFires; i++) { // Adds random herbs
+            int x = rand.nextInt(16) + 2;
+            int y = rand.nextInt(16) + 2;
+            Herbs Herbs = new Herbs(x, y);
+            objects.add(Herbs);
+        }
+        
         window.setGameObjects(this.getGameObjects());
         notifyView();
     }
