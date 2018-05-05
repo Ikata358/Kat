@@ -17,7 +17,7 @@ public class Game implements DeletableObserver {
     // private int bombTimer = 3000;
     private int numberOfBlocks = 40;
     private int numberOfFires = 20;
-    
+    private int numberOfHerbs = 20;
     public Game(Window window) {
         this.window = window;
 
@@ -42,11 +42,16 @@ public class Game implements DeletableObserver {
         for (int i = 0; i < numberOfFires; i++) { // Adds random fires
             int x = rand.nextInt(16) + 2;
             int y = rand.nextInt(16) + 2;
-            Fire fire = new Fire(x, y);
-            objects.add(fire);
+            
+            for (GameObject object : objects) {
+            	if (!(object.getPosX()==x && object.getPosY()==y)) {
+            		Fire fire = new Fire(x, y);
+            		objects.add(fire);
+            	}
+            }
         }
         
-        for (int i = 0; i < numberOfFires; i++) { // Adds random herbs
+        for (int i = 0; i < numberOfHerbs; i++) { // Adds random herbs
             int x = rand.nextInt(16) + 2;
             int y = rand.nextInt(16) + 2;
             Herbs Herbs = new Herbs(x, y);
