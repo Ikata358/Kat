@@ -22,7 +22,7 @@ public class Game implements DeletableObserver {
         this.window = window;
 
         // Creating one Player at position (1,1)
-        objects.add(new Player(10, 10, 3, 5));
+        objects.add(new Player(10, 10));
 
         // Map building
         for (int i = 0; i < size; i++) { // Frames the map with blocks
@@ -42,22 +42,34 @@ public class Game implements DeletableObserver {
         for (int i = 0; i < numberOfFires; i++) { // Adds random fires
             int x = rand.nextInt(16) + 2;
             int y = rand.nextInt(16) + 2;
-            
+            boolean occupied = false;
             for (GameObject object : objects) {
-            	if (!(object.getPosX()==x && object.getPosY()==y)) {
-            		Fire fire = new Fire(x, y);
-            		objects.add(fire);
+            	if (object.isAtPosition(x, y) == true && object.isObstacle()==true && x != 0 && y!= 0) {
+            		occupied = true;
             	}
+            }
+            if (occupied == false) {
+            	Fire fire = new Fire(x, y);
+            	objects.add(fire);
             }
         }
         
         for (int i = 0; i < numberOfHerbs; i++) { // Adds random herbs
             int x = rand.nextInt(16) + 2;
             int y = rand.nextInt(16) + 2;
+            boolean occupied = false;
+            for (GameObject object : objects) {
+            	if (object.isAtPosition(x, y) == true && object.isObstacle()==true ) {
+            		occupied = true;
+            	}
+            }
+            if (occupied == false) {
             Herbs Herbs = new Herbs(x, y);
             objects.add(Herbs);
+            }
         }
-        
+     
+        //javax.swing.JOptionPane.showMessageDialog(null,"Ton message"); 
         window.setGameObjects(this.getGameObjects());
         notifyView();
     }
@@ -69,6 +81,7 @@ public class Game implements DeletableObserver {
         int nextY = player.getPosY() + y;
 
         boolean obstacle = false;
+        boolean fire = false;
         for (GameObject object : objects) {
             if (object.isAtPosition(nextX, nextY)) {
                 obstacle = object.isObstacle();
@@ -80,6 +93,9 @@ public class Game implements DeletableObserver {
         player.rotate(x, y);
         if (obstacle == false) {
             player.move(x, y);
+        }
+        if (fire == true) {
+        	player.loseLife(1);
         }
         notifyView();
     }
